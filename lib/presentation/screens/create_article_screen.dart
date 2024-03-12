@@ -403,6 +403,14 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
           duration: Duration(seconds: 2),
         ),
       );
+
+      // Очищаем все панели
+      setState(() {
+      materialWidgets.clear();
+      accessoriesWidgets.clear();
+      panelDataMaterialList.clear();
+      panelDataAccessoriesList.clear();
+    });
     } catch (error) {
       // Обработка ошибок
       print('Error sending data to server: $error');
@@ -411,5 +419,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
     // Очищаем поля
     articleNumberController.clear();
     articleDescriptionController.clear();
+
+
   }
 }
