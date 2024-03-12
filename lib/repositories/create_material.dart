@@ -5,13 +5,13 @@ class CreateMaterial {
 
   Future<int> createArticle({
     required String nameArticle,
-    required String descriptionArticle,
+    String? descriptionArticle,
   }) async {
     try {
       Response response = await dio.post(
         'http://143.110.190.57:8002/api/article/',
         data: {
-          "name": 'sss',
+          "name": 'name',
           "number": nameArticle,
           "description": descriptionArticle,
         },

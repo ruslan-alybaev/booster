@@ -1,4 +1,5 @@
 import 'package:booster/data/panel_data.dart';
+import 'package:booster/presentation/widgets/custom_dropdown_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -45,13 +46,71 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
   final GlobalKey panel1Key = GlobalKey();
   final GlobalKey panel2Key = GlobalKey();
 
-  int materialPanelKeyCounter = 0;
-  int furniturePanelKeyCounter = 0;
 
   bool isButtonActive = false;
 
+   @override
+  void initState() {
+    super.initState();
+
+    // Добавляем слушатели к каждому контроллеру
+    articleNumberController.addListener(updateButtonState);
+    nameMaterialController.addListener(updateButtonState);
+    measurementsMaterialController.addListener(updateButtonState);
+    quantityMaterialController.addListener(updateButtonState);
+    nameAccessoriesController.addListener(updateButtonState);
+    measurementsAccessoriesController.addListener(updateButtonState);
+    quantityAccessoriesController.addListener(updateButtonState);
+  }
+
+  @override
+  void dispose() {
+    // Освобождаем ресурсы при удалении виджета
+    articleNumberController.dispose();
+    nameMaterialController.dispose();
+    measurementsMaterialController.dispose();
+    quantityMaterialController.dispose();
+    nameAccessoriesController.dispose();
+    measurementsAccessoriesController.dispose();
+    quantityAccessoriesController.dispose();
+    super.dispose();
+  }
+
+  void updateButtonState() {
+    setState(() {
+      isButtonActive = articleNumberController.text.isNotEmpty &&
+          nameMaterialController.text.isNotEmpty &&
+          measurementsMaterialController.text.isNotEmpty &&
+          quantityMaterialController.text.isNotEmpty &&
+          nameAccessoriesController.text.isNotEmpty &&
+          measurementsAccessoriesController.text.isNotEmpty &&
+          quantityAccessoriesController.text.isNotEmpty;
+
+      // Проверяем также все новые контроллеры для панелей
+      for (var panelData in panelDataMaterialList) {
+        if (panelData.nameMaterialController.text.isEmpty ||
+            panelData.quantityController.text.isEmpty ||
+            panelData.measurementsController.text.isEmpty) {
+          isButtonActive = false;
+          break;
+        }
+      }
+
+      for (var panelData in panelDataAccessoriesList) {
+        if (panelData.nameAccessoriesController.text.isEmpty ||
+            panelData.quantityController.text.isEmpty ||
+            panelData.measurementsController.text.isEmpty) {
+          isButtonActive = false;
+          break;
+        }
+      }
+    });
+  }
+   
+
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 92,
@@ -124,6 +183,8 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                       setState(() {
                         nameMaterialController.clear();
                         quantityMaterialController.clear();
+
+                        updateButtonState();
                       });
                     },
                   ),
@@ -144,6 +205,8 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                         setState(() {
                           materialWidgets.removeAt(index);
                           panelDataMaterialList.removeAt(index);
+
+                          updateButtonState();
                         });
                       },
                     );
@@ -179,6 +242,13 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                             labelTextQuantity: "Кол-во на ед. прод. *",
                           ),
                         );
+                        // Добавляем слушатели для новых контроллеров
+                        materialNameController.addListener(updateButtonState);
+                        quantityController.addListener(updateButtonState);
+                        measurementController.addListener(updateButtonState);
+                        
+                        // Обновляем состояние кнопки
+                        updateButtonState();
                       });
                     },
                   ),
@@ -211,6 +281,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                         nameAccessoriesController.clear();
                         quantityAccessoriesController.clear();
                         measurementsAccessoriesController.clear();
+                        updateButtonState();
                       });
                     },
                   ),
@@ -231,6 +302,8 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                         setState(() {
                           accessoriesWidgets.removeAt(index);
                           panelDataAccessoriesList.removeAt(index);
+
+                          updateButtonState();
                         });
                       },
                     );
@@ -267,6 +340,13 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                             labelTextQuantity: "Кол-во на ед. прод.",
                           ),
                         );
+                        // Добавляем слушатели для новых контроллеров
+                        nameAccessoriesController.addListener(updateButtonState);
+                        quantityController.addListener(updateButtonState);
+                        measurementController.addListener(updateButtonState);
+
+                        // Обновляем состояние кнопки
+                        updateButtonState();
                       });
                     },
                   ),
@@ -275,28 +355,30 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                     height: 40,
                   ),
                   SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 15,
-                        ),
-                        backgroundColor: AppColors.enableButtonColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                      onPressed: sendDataToServer,
-                      child: const Text(
-                        "Сохранить",
-                        style: TextStyle(
-                          color: AppColors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                  ),
+  width: double.infinity,
+  child: ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      padding: const EdgeInsets.symmetric(
+        vertical: 15,
+      ),
+      backgroundColor: isButtonActive
+          ? AppColors.enableButtonColor
+          : AppColors.disabledButtonColor, // Используем разные цвета для активной и неактивной кнопки
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+    ),
+    onPressed: isButtonActive ? sendDataToServer : null, // Если кнопка неактивна, то блокируем её действие
+    child: const Text(
+      "Сохранить",
+      style: TextStyle(
+        color: AppColors.white,
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+      ),
+    ),
+  ),
+),
                 ],
               ),
             ),
