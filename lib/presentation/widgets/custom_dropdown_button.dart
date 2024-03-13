@@ -26,7 +26,6 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
       builder: (context, state) {       
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             DropdownButtonFormField<String>(
               isExpanded: true,
