@@ -17,20 +17,24 @@ class CustomDropdownButton extends StatefulWidget {
 }
 
 class _CustomDropdownButtonState extends State<CustomDropdownButton> {
+    bool _hasFocus = false;
   String? selectedValue;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MeasurementCubit, List<Map<String, dynamic>>>(
-      builder: (context, state) {
+      builder: (context, state) {       
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             DropdownButtonFormField<String>(
+              isExpanded: true,
+              focusNode: FocusNode(),
+              itemHeight: 60,
               controller: widget.measurementsController,
               decoration: InputDecoration(
-                isDense: true,
-                contentPadding: EdgeInsets.zero,
+                contentPadding: EdgeInsets.symmetric(vertical: 15),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
                   borderSide: const BorderSide(color: AppColors.borderColor),
@@ -43,9 +47,8 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
                   borderRadius: BorderRadius.circular(15),
                   borderSide: const BorderSide(color: AppColors.borderColor),
                 ),
-                errorText: null, // Update error text as needed
                 label: const Padding(
-                  padding: EdgeInsets.only(left: 15),
+                  padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
                     "Ед. измерения *",
                     style: TextStyle(
@@ -56,7 +59,7 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
                     ),
                   ),
                 ),
-                fillColor: AppColors.tfBGColor,
+                fillColor: _hasFocus ? AppColors.white : AppColors.tfBGColor,
                 filled: true,
               ),
               items: state.map<DropdownMenuItem<String>>((measurement) {
@@ -76,6 +79,11 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
                 widget.measurementsController!.text = selectedValue!;
                 setState(() {
                   this.selectedValue = selectedValue; // Обновляем выбранное значение
+                });
+              },
+              onTap: () {
+                setState(() {
+                  _hasFocus = true;
                 });
               },
               selectedItemBuilder: (BuildContext context) {
