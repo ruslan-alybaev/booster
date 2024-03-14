@@ -1,5 +1,4 @@
 import 'package:booster/data/panel_data.dart';
-import 'package:booster/presentation/widgets/custom_dropdown_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -11,15 +10,13 @@ import 'package:booster/presentation/widgets/description_field.dart';
 import 'package:booster/repositories/create_material.dart';
 
 class CreateArticleScreen extends StatefulWidget {
-  const CreateArticleScreen({Key? key}) : super(key: key);
+  const CreateArticleScreen({super.key});
 
   @override
   State<CreateArticleScreen> createState() => _CreateArticleScreenState();
 }
 
-class _CreateArticleScreenState extends State<CreateArticleScreen> {
-  CustomDropdownButton? dropdownButton;
-  
+class _CreateArticleScreenState extends State<CreateArticleScreen> {  
   
   final TextEditingController articleNumberController = TextEditingController();
   final TextEditingController articleDescriptionController =
@@ -483,7 +480,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
 
       // Показываем SnackBar об успешной отправке
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Данные успешно отправлены на сервер'),
           duration: Duration(seconds: 2),
         ),

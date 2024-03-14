@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomDropdownButton extends StatefulWidget {
-  TextEditingController? measurementsController;
-  VoidCallback? onClear;
-  CustomDropdownButton({super.key, this.measurementsController, this.onClear});
+  final TextEditingController? measurementsController;
+  const CustomDropdownButton({super.key, this.measurementsController,});
 
   @override
   State<CustomDropdownButton> createState() => _CustomDropdownButtonState();
@@ -18,15 +17,6 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
 
   bool _hasFocus = false;
   String? selectedValue;
-
-
-  void clearField() {
-    widget.measurementsController?.clear();
-    setState(() {
-      // Сбрасываем выбранное значение
-      selectedValue = null;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

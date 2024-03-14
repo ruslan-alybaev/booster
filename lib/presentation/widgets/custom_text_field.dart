@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:booster/presentation/theme/app_colors.dart';
 import 'package:flutter/services.dart';
@@ -10,14 +12,14 @@ class CustomTextField extends StatefulWidget {
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
   const CustomTextField({
-    Key? key,
+    super.key,
     required this.labelText,
     required this.controller,
     this.onChanged,
     this.onEditingComplete,
     this.keyboardType,
     this.inputFormatters,
-  }) : super(key: key);
+  });
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();

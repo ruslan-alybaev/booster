@@ -8,9 +8,9 @@ class RoundIconButton extends StatelessWidget {
 
   const RoundIconButton({
     required this.isActive,
-    Key? key,
+    super.key,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

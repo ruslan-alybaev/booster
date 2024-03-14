@@ -1,4 +1,3 @@
-import 'package:booster/data/measurement_cubit.dart';
 import 'package:booster/presentation/widgets/clear_button.dart';
 import 'package:booster/presentation/widgets/custom_dropdown_button.dart';
 import 'package:booster/presentation/widgets/custom_text_field.dart';
@@ -20,7 +19,7 @@ class CreateMaterialPanel extends StatefulWidget {
   bool? isButtonEnabled;
 
   CreateMaterialPanel({
-    Key? key,
+    super.key,
     this.onPressedDeleteButton,
     required this.materialNameController,
     required this.quantityController,
@@ -28,7 +27,7 @@ class CreateMaterialPanel extends StatefulWidget {
     required this.labelTextMaterial,
     required this.labelTextQuantity,
     this.isButtonEnabled,
-  }) : super(key: key);
+  });
 
   @override
   State<CreateMaterialPanel> createState() => _CreateMaterialPanelState();

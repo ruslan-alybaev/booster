@@ -8,12 +8,12 @@ class DescriptionTextField extends StatefulWidget {
   final void Function()? onEditingComplete;
 
   const DescriptionTextField({
-    Key? key,
+    super.key,
     required this.labelText,
     required this.controller,
     this.onChanged,
     this.onEditingComplete,
-  }) : super(key: key);
+  });
 
   @override
   _DescriptionTextFieldState createState() => _DescriptionTextFieldState();
