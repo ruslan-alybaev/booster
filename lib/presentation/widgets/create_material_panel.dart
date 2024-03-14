@@ -1,3 +1,4 @@
+import 'package:booster/data/measurement_cubit.dart';
 import 'package:booster/presentation/widgets/clear_button.dart';
 import 'package:booster/presentation/widgets/custom_dropdown_button.dart';
 import 'package:booster/presentation/widgets/custom_text_field.dart';
@@ -5,11 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CreateMaterialPanel extends StatefulWidget {
+  
   final void Function()? onPressedDeleteButton;
 
   final TextEditingController materialNameController;
   final TextEditingController quantityController;
   final TextEditingController measurementController;
+  
 
   final String labelTextMaterial;
   final String labelTextQuantity;

@@ -18,6 +18,9 @@ class CreateArticleScreen extends StatefulWidget {
 }
 
 class _CreateArticleScreenState extends State<CreateArticleScreen> {
+  CustomDropdownButton? dropdownButton;
+  
+  
   final TextEditingController articleNumberController = TextEditingController();
   final TextEditingController articleDescriptionController =
       TextEditingController();
@@ -48,6 +51,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
 
 
   bool isButtonActive = false;
+
 
    @override
   void initState() {
@@ -183,7 +187,6 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                       setState(() {
                         nameMaterialController.clear();
                         quantityMaterialController.clear();
-
                         updateButtonState();
                       });
                     },
