@@ -5,17 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CreateMaterialPanel extends StatefulWidget {
-  
   final void Function()? onPressedDeleteButton;
 
   final TextEditingController materialNameController;
   final TextEditingController quantityController;
   final TextEditingController measurementController;
-  
 
   final String labelTextMaterial;
   final String labelTextQuantity;
-  
+
   bool? isButtonEnabled;
 
   CreateMaterialPanel({
@@ -81,7 +79,9 @@ class _CreateMaterialPanelState extends State<CreateMaterialPanel> {
                 labelText: widget.labelTextQuantity,
                 controller: widget.quantityController,
                 keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
               ),
             ),
             const SizedBox(width: 10),
@@ -90,7 +90,6 @@ class _CreateMaterialPanelState extends State<CreateMaterialPanel> {
                 measurementsController: widget.measurementController,
               ),
             ),
-
           ],
         ),
         const SizedBox(height: 10),
