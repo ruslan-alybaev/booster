@@ -1,4 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'package:booster/presentation/theme/app_colors.dart';
@@ -58,17 +57,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
         fillColor: _hasFocus ? AppColors.white : AppColors.tfBGColor,
         filled: true,
       ),
-      onChanged: (text) {
-        if (text.isEmpty) {
-          setState(() {
-            _errorText = "Поле обязательно к заполнению";
-          });
-        } else {
-          setState(() {
-            _errorText = null;
-          });
-        }
-        widget.onChanged?.call(text);
+      onChanged: (value) {
+        print(value);
       },
       onTap: () {
         setState(() {

@@ -87,7 +87,7 @@ class _CreateMaterialPanelState extends State<CreateMaterialPanel> {
                 labelText: widget.labelTextQuantity,
                 controller: widget.quantityController,
                 keyboardType: TextInputType.number,
-                inputFormatters: [
+                inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.digitsOnly,
                 ],
               ),
