@@ -412,8 +412,6 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
           String nameMaterial = panelData.nameMaterialController.text;
           String quantity = panelData.quantityController.text;
           String measurementText = panelData.measurementsController.text;
-          print(
-              'Material: $nameMaterial, Quantity: $quantity, Measurement: $measurementText');
 
           if (nameMaterial.isNotEmpty &&
               quantity.isNotEmpty &&
@@ -449,9 +447,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
           String nameAccessories = panelData.nameAccessoriesController.text;
           String quantity = panelData.quantityController.text;
           String measurementText = panelData.measurementsController.text;
-          print(
-              'Material: $nameAccessories, Quantity: $quantity, Measurement: $measurementText');
-
+        
           if (nameAccessories.isNotEmpty &&
               quantity.isNotEmpty &&
               measurementText.isNotEmpty) {
