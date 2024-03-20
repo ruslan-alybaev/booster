@@ -386,7 +386,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
       // Отправляем данные артикула на сервер
       int articleId = await createMaterial.createArticle(
         nameArticle: articleNumber,
-        descriptionArticle: articleDescription,
+        descriptionArticle: articleDescription.isEmpty ? "." : articleDescription,
       );
 
       // Включаем данные из исходных панелей в список перед отправкой на сервер
