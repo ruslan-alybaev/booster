@@ -1,113 +1,97 @@
-
 import 'package:booster/data/measurement_cubit.dart';
 import 'package:booster/presentation/theme/app_colors.dart';
-import 'package:dropdown_button3/dropdown_button3.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomDropdownButton extends StatefulWidget {
   final TextEditingController? measurementsController;
-  final Function()? onDropdownReset;
-  const CustomDropdownButton({super.key, this.measurementsController, this.onDropdownReset,});
 
+  const CustomDropdownButton({
+    super.key,
+    this.measurementsController,
+  });
   @override
   State<CustomDropdownButton> createState() => _CustomDropdownButtonState();
 }
 
 class _CustomDropdownButtonState extends State<CustomDropdownButton> {
-
-  bool _hasFocus = false;
-  String? selectedValue;
-
-  void resetSelectedValue() {
-    setState(() {
-      selectedValue = null;
-    });
-  }
-  
+  String selectedValue = '';
 
   @override
   Widget build(BuildContext context) {
-    final measurementCubit = BlocProvider.of<MeasurementCubit>(context);
-    return BlocBuilder<MeasurementCubit, List<Map<String, dynamic>>>(
-        bloc: measurementCubit,
-        builder: (context, measurements) {
-          return DropdownButtonFormField2(
-            focusNode: FocusNode(),
-            buttonHeight: 60,
-            dropdownDecoration: BoxDecoration(
-             borderRadius: BorderRadius.circular(15),
-             color: AppColors.textColor
-            ),
-            controller: widget.measurementsController,
-            decoration: InputDecoration(
-              isDense: true,
-              contentPadding: EdgeInsets.zero,
-              border: OutlineInputBorder(                  
+    return Focus(
+      child: BlocBuilder<MeasurementCubit, List<Map<String, dynamic>>>(
+        builder: (context, measurementNames) {
+          return DropdownMenu<Map<String, dynamic>>(
+            inputDecorationTheme: InputDecorationTheme(
+              fillColor: widget.measurementsController!.text.isEmpty
+                  ? AppColors.tfBGColor
+                  : AppColors.white,
+              filled: true,
+              contentPadding: const EdgeInsets.only(
+                top: -10,
+                bottom: -10,
+                left: 10,
+              ),
+              labelStyle: const TextStyle(color: AppColors.hintTextColor),
+              focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
+                borderSide: const BorderSide(
+                  color: AppColors.disabledButtonColor,
+                ),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
-                borderSide: const BorderSide(color: AppColors.borderColor),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.red),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-                borderSide: const BorderSide(color: AppColors.borderColor),
-              ),
-              label: const Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: Text(
-                  "Ед. измерения*",
-                  style: TextStyle(
-                    color: AppColors.hintTextColor,
-                    backgroundColor: Colors.transparent,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-              fillColor: _hasFocus ? AppColors.white : AppColors.tfBGColor,
-              filled: true,
-            ),
-            isExpanded: true,
-            items: measurements
-                .map((measurement) => DropdownMenuItem<String>(
-                      value: measurement["id"],
-                      child: Text(
-                        measurement["name"],
-                        style: const TextStyle(
-                          color: AppColors.white,
-                          fontSize: 14,
-                        ),
+                borderSide: const BorderSide(
+                        color: AppColors.disabledButtonColor,
+                        width: 1.0,
                       ),
-                    ))
-                .toList(),
-            onChanged: (selectedValue) {
-              widget.measurementsController?.text = selectedValue!;
-              setState(() {
-                this.selectedValue = selectedValue;
-                _hasFocus = true;
-              });
+              ),
+            ),
+            width: 185.0,
+            trailingIcon: const Icon(Icons.arrow_drop_down),
+            controller: widget.measurementsController,
+            label: const Text(
+              'Ед.измерения *',
+              style: TextStyle(fontSize: 15),
+            ),
+            onSelected: (Map<String, dynamic>? selectedMeasurement) {
+              if (selectedMeasurement != null) {
+                setState(() {
+                  selectedValue = selectedMeasurement['id'].toString();
+                });
+              }
             },
-            selectedItemBuilder: (BuildContext context) {
-              return measurements.map<Widget>((measurement) {
-                return Text(
-                  measurement['name'],
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: measurement['id'].toString() == selectedValue
-                        ? AppColors.textColor
-                        :  AppColors.white// Черный цвет выбранного элемента списка
+            menuStyle: MenuStyle(
+              shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              )),
+              backgroundColor: const MaterialStatePropertyAll(
+                AppColors.textColor,
+              ),
+            ),
+            dropdownMenuEntries:
+                measurementNames.map<DropdownMenuEntry<Map<String, dynamic>>>(
+              (measurement) {
+                return DropdownMenuEntry<Map<String, dynamic>>(
+                  value: measurement,
+                  label: measurement['name'].toString(),
+                  trailingIcon: measurement['name'] == 'метр'
+                      ? const Icon(
+                          Icons.arrow_drop_up,
+                          color: Colors.white,
+                        )
+                      : null,
+                  style: MenuItemButton.styleFrom(
+                    foregroundColor: AppColors.white,
+                    backgroundColor: AppColors.textColor,
                   ),
                 );
-              }).toList();
-            },
-
+              },
+            ).toList(),
           );
-        });
+        },
+      ),
+    );
   }
 }

@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 
 class CustomTextField extends StatefulWidget {
   final String? labelText;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final void Function(String)? onChanged;
   final void Function()? onEditingComplete;
   final TextInputType? keyboardType;
@@ -31,7 +31,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: widget.controller,
       focusNode: FocusNode(),
       keyboardType: widget.keyboardType,

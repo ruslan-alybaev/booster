@@ -7,14 +7,16 @@ import 'package:flutter/services.dart';
 class CreateMaterialPanel extends StatefulWidget {
   final void Function()? onPressedDeleteButton;
 
-  final TextEditingController materialNameController;
-  final TextEditingController quantityController;
-  final TextEditingController measurementController;
+  final TextEditingController? materialNameController;
+  final TextEditingController? quantityController;
+  final TextEditingController? measurementController;
+
 
   final String labelTextMaterial;
   final String labelTextQuantity;
 
   bool? isButtonEnabled;
+  final VoidCallback? onDelete;
 
   CreateMaterialPanel({
     super.key,
@@ -25,6 +27,7 @@ class CreateMaterialPanel extends StatefulWidget {
     required this.labelTextMaterial,
     required this.labelTextQuantity,
     this.isButtonEnabled,
+    this.onDelete,
   });
 
   @override
@@ -35,18 +38,18 @@ class _CreateMaterialPanelState extends State<CreateMaterialPanel> {
   @override
   void initState() {
     super.initState();
-    widget.materialNameController.addListener(updateButtonColor);
+    widget.materialNameController?.addListener(updateButtonColor);
   }
 
   void updateButtonColor() {
     setState(() {
-      widget.isButtonEnabled = widget.materialNameController.text.isNotEmpty;
+      widget.isButtonEnabled = widget.materialNameController?.text.isNotEmpty;
     });
   }
 
   @override
   void dispose() {
-    widget.materialNameController.removeListener(updateButtonColor);
+    widget.materialNameController?.removeListener(updateButtonColor);
     super.dispose();
   }
 
@@ -65,7 +68,12 @@ class _CreateMaterialPanelState extends State<CreateMaterialPanel> {
             const SizedBox(width: 10),
             RoundIconButton(
               onTap: widget.isButtonEnabled ?? false
-                  ? widget.onPressedDeleteButton
+                  ? () {
+                      widget.onDelete?.call();
+                      widget.materialNameController?.clear();
+                      widget.quantityController?.clear();
+                      widget.measurementController?.clear();
+                    }
                   : null,
               isActive: widget.isButtonEnabled,
             )

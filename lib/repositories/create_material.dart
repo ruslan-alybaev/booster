@@ -22,7 +22,7 @@ class CreateMaterial {
 
       return response.data['id'];
     } catch (error) {
-      print('Error create craeteArticule : $error');
+      print('Error create createArticle : $error');
       throw error;
     }
   }
