@@ -1,12 +1,12 @@
 import 'package:booster/presentation/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
-class RoundIconButton extends StatelessWidget {
+class ClearButton extends StatelessWidget {
   final bool?
       isActive; // Добавляем параметр isActive для определения активности кнопки
   final void Function()? onTap;
 
-  const RoundIconButton({
+  const ClearButton({
     required this.isActive,
     super.key,
     this.onTap,

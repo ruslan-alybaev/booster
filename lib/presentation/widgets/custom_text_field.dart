@@ -11,8 +11,8 @@ class CustomTextField extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLines;
 
-  CustomTextField({
-    Key? key,
+  const CustomTextField({
+    super.key,
     this.labelText,
     this.controller,
     this.onChanged,
@@ -20,7 +20,7 @@ class CustomTextField extends StatefulWidget {
     this.keyboardType,
     this.inputFormatters,
     this.maxLines,
-  }) : super(key: key);
+  });
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();

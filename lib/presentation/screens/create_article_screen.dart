@@ -8,7 +8,6 @@ import 'package:booster/presentation/theme/app_colors.dart';
 import 'package:booster/presentation/widgets/add_button.dart';
 import 'package:booster/presentation/widgets/create_material_panel.dart';
 import 'package:booster/presentation/widgets/custom_text_field.dart';
-import 'package:booster/presentation/widgets/description_field.dart';
 import 'package:booster/repositories/create_material.dart';
 
 class CreateArticleScreen extends StatefulWidget {

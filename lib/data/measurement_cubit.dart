@@ -43,7 +43,7 @@ class MeasurementCubit extends Cubit<List<Map<String, dynamic>>> {
 
       emit(measurements);
     } catch (error) {
-      print('Ошибка при получении имен измерений: $error');
+      print('Ошибка при получении измерений: $error');
     }
   }
 }

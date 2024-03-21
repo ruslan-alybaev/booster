@@ -15,7 +15,6 @@ class CreateMaterialPanel extends StatefulWidget {
   bool? isButtonEnabled;
   final VoidCallback? onDelete;
 
-  final void Function(String)? onChanged;
 
   CreateMaterialPanel({
     super.key,
@@ -26,7 +25,7 @@ class CreateMaterialPanel extends StatefulWidget {
     required this.labelTextMaterial,
     required this.labelTextQuantity,
     this.isButtonEnabled,
-    this.onDelete, this.onChanged,
+    this.onDelete,
   });
 
   @override
@@ -66,7 +65,7 @@ class _CreateMaterialPanelState extends State<CreateMaterialPanel> {
               ),
             ),
             const SizedBox(width: 10),
-            RoundIconButton(
+            ClearButton(
               onTap: widget.isButtonEnabled ?? false
                   ? () {
                       widget.onDelete?.call();
