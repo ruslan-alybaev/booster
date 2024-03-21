@@ -6,17 +6,16 @@ import 'package:flutter/services.dart';
 
 class CreateMaterialPanel extends StatefulWidget {
   final void Function()? onPressedDeleteButton;
-
   final TextEditingController? materialNameController;
   final TextEditingController? quantityController;
   final TextEditingController? measurementController;
-
-
   final String labelTextMaterial;
   final String labelTextQuantity;
 
   bool? isButtonEnabled;
   final VoidCallback? onDelete;
+
+  final void Function(String)? onChanged;
 
   CreateMaterialPanel({
     super.key,
@@ -27,7 +26,7 @@ class CreateMaterialPanel extends StatefulWidget {
     required this.labelTextMaterial,
     required this.labelTextQuantity,
     this.isButtonEnabled,
-    this.onDelete,
+    this.onDelete, this.onChanged,
   });
 
   @override
@@ -63,6 +62,7 @@ class _CreateMaterialPanelState extends State<CreateMaterialPanel> {
               child: CustomTextField(
                 labelText: widget.labelTextMaterial,
                 controller: widget.materialNameController,
+                keyboardType: TextInputType.text,
               ),
             ),
             const SizedBox(width: 10),

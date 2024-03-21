@@ -27,6 +27,7 @@ class _DescriptionTextFieldState extends State<DescriptionTextField> {
     return TextField(
       controller: widget.controller,
       focusNode: FocusNode(),
+      keyboardType: TextInputType.text,
       maxLines: 8,
       decoration: InputDecoration(
         alignLabelWithHint: true,

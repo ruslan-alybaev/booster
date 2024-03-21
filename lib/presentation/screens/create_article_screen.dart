@@ -21,6 +21,8 @@ class CreateArticleScreen extends StatefulWidget {
 }
 
 class _CreateArticleScreenState extends State<CreateArticleScreen> {
+
+  
   final TextEditingController articleNumberController = TextEditingController();
   final TextEditingController articleDescriptionController =
       TextEditingController();
@@ -38,8 +40,6 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
   final TextEditingController quantityAccessoriesController =
       TextEditingController();
 
-  final CreateMaterial createMaterial = CreateMaterial();
-
   List<CreateMaterialPanel> materialWidgets = [];
   List<CreateMaterialPanel> accessoriesWidgets = [];
 
@@ -49,8 +49,9 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
   final GlobalKey panel1Key = GlobalKey();
   final GlobalKey panel2Key = GlobalKey();
 
-  bool isButtonActive = false;
+  final CreateMaterial createMaterial = CreateMaterial();
 
+  bool isButtonActive = false;
   @override
   void initState() {
     super.initState();
@@ -63,6 +64,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
     nameAccessoriesController.addListener(updateButtonState);
     measurementsAccessoriesController.addListener(updateButtonState);
     quantityAccessoriesController.addListener(updateButtonState);
+
   }
 
   @override
@@ -77,6 +79,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
     quantityAccessoriesController.dispose();
     super.dispose();
   }
+
 
   void updateButtonState() {
     setState(() {
@@ -111,6 +114,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 92,
@@ -149,13 +153,16 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                     CustomTextField(
                       labelText: "Номер артикула *",
                       controller: articleNumberController,
+                      keyboardType: TextInputType.text,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    DescriptionTextField(
-                      labelText: "Описание",
+                    CustomTextField(
+                      labelText: "Описание *",
                       controller: articleDescriptionController,
+                      maxLines: 8,
+                      keyboardType: TextInputType.text,
                     ),
                     const SizedBox(
                       height: 20,
@@ -349,7 +356,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                           backgroundColor: isButtonActive
                               ? AppColors.enableButtonColor
                               : AppColors
-                                  .disabledButtonColor, // Используем разные цвета для активной и неактивной кнопки
+                                  .disabledButtonColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
@@ -388,7 +395,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
         nameArticle: articleNumber,
         descriptionArticle: articleDescription.isEmpty ? "." : articleDescription,
       );
-
+    
       // Включаем данные из исходных панелей в список перед отправкой на сервер
       panelDataMaterialList.insert(
           0,
